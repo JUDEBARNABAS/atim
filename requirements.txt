@@ -1,0 +1,10 @@
+Flask
+gunicorn
+torch
+transformers
+sentencepiece
+accelerate
+bitsandbytes
+google-generativeai
+python-dotenv
+requests
