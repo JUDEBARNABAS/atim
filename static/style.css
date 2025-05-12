@@ -1,0 +1,256 @@
+/* Add these new styles and update existing ones as needed */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5; /* Slightly different background */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.main-container {
+    width: 95%;
+    max-width: 700px; /* Slightly narrower for a chat focus */
+    background-color: #ffffff;
+    padding: 20px; /* Uniform padding */
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; Removed to allow button on right */
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    position: relative; /* For absolute positioning of the button */
+}
+
+#app-logo {
+    height: 40px; /* Slightly smaller logo */
+    margin-right: 12px;
+}
+
+.app-header h1 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 1.6em; /* Adjusted size */
+    flex-grow: 1; /* Allow h1 to take available space */
+    text-align: center; /* Center the title */
+    margin-left: -40px; /* Offset to truly center with button present, adjust as needed */
+}
+
+#toggle-settings-button {
+    background: none;
+    border: none;
+    color: #555;
+    font-size: 1.5em; /* Icon size */
+    cursor: pointer;
+    padding: 5px;
+    position: absolute; /* Position relative to header */
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#toggle-settings-button:hover {
+    color: #007bff;
+}
+
+/* Collapsible Content Styles */
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    padding: 0 20px; /* Add padding only when open */
+    border-bottom: 1px solid transparent; /* For transition */
+}
+
+.collapsible-content.expanded {
+    max-height: 1000px; /* Adjust if content is taller */
+    padding: 20px; /* Add padding back when expanded */
+    border-bottom: 1px solid #e0e0e0; /* Separator when open */
+    margin-bottom: 20px;
+}
+
+/* Keep collapsed class for initial state (JS will toggle 'expanded') */
+.collapsible-content.collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0; /* No margin when collapsed */
+    border-bottom-color: transparent;
+}
+
+
+.section-container {
+    background-color: #f8f9fa;
+    padding: 15px; /* Slightly less padding inside sections */
+    border-radius: 8px;
+    margin-bottom: 20px; /* Spacing between sections inside collapsible */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.section-container:last-child {
+    margin-bottom: 0; /* No bottom margin for the last section inside collapsible */
+}
+
+
+.section-container h2 {
+    color: #3498db;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e7e7e7;
+    padding-bottom: 8px;
+    font-size: 1.2em;
+}
+
+/* Accessibility & Chat Settings */
+.accessibility-settings .setting-item {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+}
+.accessibility-settings label {
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: #444;
+    font-size: 0.9em;
+}
+.accessibility-settings select,
+.accessibility-settings textarea {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    font-size: 0.9em;
+    background-color: #fff;
+}
+.accessibility-settings textarea {
+    min-height: 70px; /* Good for system instructions */
+    resize: vertical;
+    font-family: inherit;
+}
+
+
+/* Chatbot Section - main focus */
+#chatbot-section {
+    background-color: #fff; /* Make chatbot section blend with main container or slightly off-white */
+    box-shadow: none; /* Remove extra shadow if it's the main content area now */
+    padding: 0; /* Remove padding if chat-messages has enough */
+    margin-top: 0; /* If collapsible is closed, this should be closer to header */
+}
+
+.chat-messages {
+    height: 350px; /* Or make it more dynamic with flex-grow */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    background-color: #f9f9f9; /* Light background for messages area */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Avatar and message styles from previous step should mostly work */
+.message-container {
+    display: flex;
+    margin-bottom: 12px;
+    max-width: 85%;
+    align-items: flex-end;
+}
+.message-container.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+.message-container.bot {
+    align-self: flex-start;
+}
+.avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 8px;
+    flex-shrink: 0;
+    border: 1px solid #eee; /* Subtle border for avatars */
+}
+.message {
+    padding: 10px 15px;
+    border-radius: 18px;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Subtle shadow for messages */
+}
+.message p { margin: 0; font-size: 0.95em; line-height: 1.4; }
+
+.message-container.user .message {
+    background-color: #007bff; /* Blue for user */
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+.message-container.bot .message {
+    background-color: #6c757d; /* Grey for bot - Atim's color? */
+    color: white; /* White text on darker bot bubble */
+    border-bottom-left-radius: 5px;
+}
+
+
+.chat-input-area {
+    display: flex;
+    align-items: center;
+    padding-top: 10px; /* Space above input */
+}
+#ai-user-input {
+    flex-grow: 1;
+    padding: 12px 15px; /* More padding */
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 1em;
+}
+#ai-send-button {
+    padding: 12px 20px; /* More padding */
+    background-color: #673ab7; /* Gender Tech Purple-ish, adjust to actual brand */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+}
+#ai-send-button:hover {
+    background-color: #5e35b1;
+}
+
+.loading-indicator { margin: 10px 0; font-style: italic; color: #555; text-align: center; }
+
+/* Footer Styles */
+.app-footer {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+    font-size: 0.85em;
+    color: #666;
+}
+.app-footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+.app-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Simple Translator Styles (kept for completeness if section remains) */
+#translator-section .language-selectors select { padding: 8px; font-size: 0.9em; }
+#translator-section .language-selectors span { font-size: 1.3em; }
+#translator-section textarea#text-to-translate-simple { height: 70px; padding: 8px; font-size: 0.95em; }
+#translator-section button#translate-button-simple { background-color: #5cb85c; padding: 8px 15px; font-size: 0.95em; }
+#translator-section .result-box { padding: 10px; min-height: 30px; }
+#translator-section .result-box h3 { font-size: 1em; margin-bottom: 5px; }
+#translator-section #translated-text-output-simple { font-size: 0.95em; }
