@@ -1,0 +1,23 @@
+# Environment secrets
+.env
+
+# Python virtual environment (if you ever used venv)
+.venv/
+venv/
+ENV/
+
+# Python bytecode and cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code specific
+.vscode/
+
+# macOS specific
+.DS_Store
+
+# If you have Conda environment files directly in your project (not common for shared projects)
+# You would add their names here, e.g., an_env_folder/
+# But typically, Conda environments are managed outside the project directory.

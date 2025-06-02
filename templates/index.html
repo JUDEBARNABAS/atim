@@ -17,21 +17,9 @@
             </button>
         </header>
 
-        <!-- Collapsible Settings and Tools Section -->
         <div id="collapsible-content" class="collapsible-content collapsed">
             <div class="section-container accessibility-settings">
                 <h2>Chat Settings & Tools ⚙️</h2>
-                <!-- Speech Settings -->
-                <div class="setting-item speech-controls">
-                    <label>Speech Options:</label>
-                    <div class="speech-buttons-group">
-                        <button id="toggle-tts-button" class="speech-button" title="Toggle Atim's Voice (Text-to-Speech)">
-                            <i class="fas fa-volume-up"></i> <span>Speak Replies</span>
-                        </button>
-                        <!-- STT will be integrated with the chat input -->
-                    </div>
-                </div>
-
                 <div class="setting-item">
                     <label for="chat-source-language">I will type/speak in:</label>
                     <select id="chat-source-language">
@@ -41,7 +29,7 @@
                     </select>
                 </div>
                 <div class="setting-item">
-                    <label for="chat-target-language">Show & Speak Atim's replies in:</label>
+                    <label for="chat-target-language">Show Atim's replies in:</label>
                     <select id="chat-target-language">
                         {% for code, name in languages.items() %}
                         <option value="{{ code }}" {% if code == 'eng' %}selected{% endif %}>{{ name }}</option>
@@ -54,26 +42,48 @@
                 </div>
             </div>
 
-            <!-- Quick Text Translator Section (Optional) -->
-            <div class="section-container" id="translator-section">
-                <!-- ... your existing translator HTML ... -->
+            <div class="section-container" id="translator-section-simple">
+                <h2>Quick Text Translator ↔️</h2>
+                <div class="setting-item">
+                    <label for="text-to-translate-simple">Text to Translate:</label>
+                    <textarea id="text-to-translate-simple" placeholder="Enter text here..."></textarea>
+                </div>
+                <div class="language-selectors-simple setting-item" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <label for="source-language-simple">From:</label>
+                        <select id="source-language-simple">
+                            <option value="">Auto-detect (Not active)</option>
+                            {% for code, name in languages.items() %}
+                            <option value="{{ code }}" {% if code == 'eng' %}selected{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <i class="fas fa-exchange-alt" style="font-size: 1.2em; color: #007bff; margin: 0 10px;"></i>
+                    <div>
+                        <label for="target-language-simple">To:</label>
+                        <select id="target-language-simple">
+                            {% for code, name in languages.items() %}
+                            <option value="{{ code }}" {% if code == 'eng' %}selected{% endif %}>{{ name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <button id="translate-button-simple" class="action-button">Translate Text</button>
+                <div id="translation-loading-simple" class="loading-indicator" style="display: none;">Translating...</div>
+                <div class="result-box-simple setting-item">
+                    <label>Result:</label>
+                    <p id="translated-text-output-simple">Translation will appear here.</p>
+                </div>
             </div>
         </div>
         
-        <!-- Atim Chatbot Section -->
         <div class="section-container" id="chatbot-section">
             <div class="chat-messages" id="ai-chat-messages">
                 <!-- Initial bot message will be added by JS -->
             </div>
             <div class="chat-input-area">
-                <button id="stt-button" class="speech-button" title="Speak to Atim (Speech-to-Text)">
-                    <i class="fas fa-microphone"></i>
-                </button>
-                <input type="text" id="ai-user-input" placeholder="Chat with Atim or click mic...">
+                <input type="text" id="ai-user-input" placeholder="Chat with Atim...">
                 <button id="ai-send-button">Send</button>
-            </div>
-            <div id="stt-listening-indicator" style="display: none; text-align: center; margin-top: 5px; color: #007bff;">
-                <i class="fas fa-waveform"></i> Listening...
             </div>
             <div id="ai-loading" class="loading-indicator" style="display: none;">Atim is thinking... 🤔</div>
         </div>
@@ -86,8 +96,11 @@
     </div>
 
     <script>
+        // Pass image URLs from Flask to JavaScript
         const userAvatarUrl = "{{ url_for('static', filename='images/user_avatar.png') }}";
         const botAvatarUrl = "{{ url_for('static', filename='images/bot_avatar.png') }}";
+        // Pass available languages from Flask to JavaScript, if needed directly by JS
+        // const availableLanguages = {{ languages | tojson }}; // Example if JS needs it
     </script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
